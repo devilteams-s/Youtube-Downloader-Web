@@ -942,12 +942,51 @@ body {
   color: #6ee7b7;
 }
 
-/* Alt Bilgi */
-.app-footer {
-  text-align: center;
-  font-size: 0.75rem;
-  color: var(--text-dim);
-  padding-top: 10px;
+/* Sağ Alt Yapımcı Rozeti */
+.creator-badge {
+  position: fixed;
+  bottom: 18px;
+  right: 20px;
+  z-index: 100;
+  pointer-events: auto;
+}
+
+.creator-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(18, 20, 31, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-glass);
+  padding: 7px 15px;
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-family: var(--font-sans);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.55);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.creator-link:hover {
+  color: #fff;
+  border-color: var(--accent-red);
+  box-shadow: 0 4px 24px var(--accent-red-glow);
+  transform: translateY(-2px);
+}
+
+.creator-link strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.creator-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--accent-red);
+  box-shadow: 0 0 8px var(--accent-red);
 }
 
 .hidden {
