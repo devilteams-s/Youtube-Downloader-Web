@@ -21,7 +21,7 @@ except ImportError:
     print("[HATA] yt-dlp kütüphanesi bulunamadı! Lütfen 'pip install yt-dlp' komutunu çalıştırın.")
     sys.exit(1)
 
-PORT = 5180
+PORT = 3034
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DOWNLOADS_DIR = os.path.join(BASE_DIR, "downloads")
 os.makedirs(DOWNLOADS_DIR, exist_ok=True)

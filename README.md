@@ -97,7 +97,7 @@ python3 server.py
 python server.py
 ```
 
-Sunucu başladığında tarayıcınızda otomatik olarak **`http://localhost:5180`** açılacaktır.
+Sunucu başladığında tarayıcınızda otomatik olarak **`http://localhost:3034`** açılacaktır.
 
 ---
 
