@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Downloader Pro</title>
+  <meta name="description" content="Hızlı, reklamsız ve yüksek kaliteli YouTube video ve MP3 ses indirme aracı.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="ambient-glow glow-top"></div>
+  <div class="ambient-glow glow-bottom"></div>
+
+  <div class="app-layout">
+    <!-- Üst Başlık -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">YT Downloader <span class="pro-tag">PRO</span></h1>
+          <p class="brand-subtitle">Ultra Hızlı 4K Video & 320kbps MP3 İndirici</p>
+        </div>
+      </div>
+
+      <div class="header-badges">
+        <span class="status-badge"><span class="pulse-dot"></span> yt-dlp Aktif</span>
+        <span class="status-badge"><span class="pulse-dot green"></span> FFmpeg 1080p/4K</span>
+      </div>
+    </header>
+
+    <!-- Ana Arama & Link Giriş Kutusu -->
+    <main class="main-content">
+      <section class="search-card glass-box">
+        <form id="url-form" class="url-input-container">
+          <div class="input-icon-wrap">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+              <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+            </svg>
+          </div>
+          <input 
+            type="url" 
+            id="video-url" 
+            placeholder="YouTube video linkini buraya yapıştırın (örn: https://www.youtube.com/watch?v=...)" 
+            autocomplete="off"
+            required
+          >
+          <button type="button" id="btn-paste" class="btn-tool" title="Panodan Yapıştır">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+            <span>Yapıştır</span>
+          </button>
+          <button type="submit" id="btn-fetch" class="btn-primary">
+            <span id="btn-fetch-text">Videoyu Getir</span>
+            <span id="btn-fetch-spinner" class="spinner hidden"></span>
+          </button>
+        </form>
+
+        <div class="quick-tags">
+          <span class="tag-title">Özellikler:</span>
+          <span class="tag">MP4 1080p Full HD</span>
+          <span class="tag">MP3 320kbps Ses</span>
+          <span class="tag">Hızlı Birleştirme</span>
+          <span class="tag">Sıfır Reklam</span>
+        </div>
+      </section>
+
+      <!-- Video Detay & İndirme Seçenekleri Kartı (Varsayılan Gizli) -->
+      <section id="video-card" class="video-preview-card glass-box hidden">
+        <div class="video-preview-grid">
+          <div class="thumbnail-wrapper">
+            <img id="video-thumb" src="" alt="Video Küçük Resmi">
+            <span id="video-duration" class="duration-badge">00:00</span>
+          </div>
+
+          <div class="video-info">
+            <h2 id="video-title" class="video-title">Video Başlığı</h2>
+            <div class="video-meta">
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <strong id="video-author">Kanal</strong>
+              </span>
+              <span class="meta-item">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                <span id="video-views">0 görüntülenme</span>
+              </span>
+            </div>
+
+            <!-- Format Seçim Sekmeleri -->
+            <div class="format-tabs">
+              <button class="tab-btn active" data-tab="video">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+                Video (MP4)
+              </button>
+              <button class="tab-btn" data-tab="audio">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                Sadece Ses (MP3)
+              </button>
+            </div>
+
+            <!-- Video Kalite Seçenekleri -->
+            <div id="tab-content-video" class="tab-pane active">
+              <label class="field-label">Çözünürlük Seçin:</label>
+              <div id="formats-grid" class="formats-chip-grid">
+                <!-- Javascript ile doldurulacak -->
+              </div>
+            </div>
+
+            <!-- Ses Kalite Seçenekleri -->
+            <div id="tab-content-audio" class="tab-pane hidden">
+              <div class="audio-preset-box">
+                <div class="audio-info-row">
+                  <div class="audio-icon-box">🎵</div>
+                  <div>
+                    <strong>Ultra Yüksek Kalite MP3</strong>
+                    <p>320 kbps CBR ses formatına otomatik dönüştürülür.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- İndirmeyi Başlat Butonu -->
+            <div class="download-action-row">
+              <button id="btn-start-download" class="btn-download-action">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                <span id="btn-download-label">İndirmeyi Başlat</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Canlı İndirme İlerleme Paneli (Aktif indirmede görünür) -->
+      <section id="progress-card" class="progress-box glass-box hidden">
+        <div class="progress-header">
+          <div class="progress-title-meta">
+            <span class="live-indicator"><span class="dot"></span> İndiriliyor</span>
+            <h3 id="progress-video-title">Video İndiriliyor...</h3>
+          </div>
+          <span id="progress-percent-label" class="progress-percent">0%</span>
+        </div>
+
+        <div class="progress-bar-track">
+          <div id="progress-bar-fill" class="progress-bar-fill" style="width: 0%;"></div>
+        </div>
+
+        <div class="progress-stats-grid">
+          <div class="p-stat">
+            <span class="p-stat-title">İndirilen / Toplam</span>
+            <span id="p-stat-bytes" class="p-stat-val">0 MB / --</span>
+          </div>
+          <div class="p-stat">
+            <span class="p-stat-title">Hız</span>
+            <span id="p-stat-speed" class="p-stat-val">-- KB/s</span>
+          </div>
+          <div class="p-stat">
+            <span class="p-stat-title">Kalan Süre (ETA)</span>
+            <span id="p-stat-eta" class="p-stat-val">--</span>
+          </div>
+        </div>
+
+        <div id="download-success-cta" class="success-banner hidden">
+          <span>🎉 İndirme Tamamlandı!</span>
+          <a id="btn-direct-save" href="#" class="btn-save-file" download>
+            📥 Dosyayı Bilgisayara Kaydet
+          </a>
+        </div>
+      </section>
+
+      <!-- İndirilenler Kütüphanesi -->
+      <section class="library-section glass-box">
+        <div class="library-header">
+          <div class="lib-title-wrap">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+            </svg>
+            <h2>İndirilen Dosyalar</h2>
+          </div>
+          <button id="btn-refresh-library" class="btn-icon-subtle" title="Listeyi Yenile">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="downloads-list" class="downloads-table-container">
+          <div class="empty-state">
+            Henüz indirilmiş dosya bulunmuyor. Yukarıdan bir YouTube bağlantısı girerek indirmeye başlayın.
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Alt Bilgi -->
+    <footer class="app-footer">
+      <p>YouTube Video Downloader Pro • yt-dlp & FFmpeg motoru ile güçlendirilmiştir.</p>
+    </footer>
+  </div>
+
+  <!-- Medya Oynatıcı Modalı (Önizleme) -->
+  <div id="player-modal" class="modal-backdrop hidden">
+    <div class="modal-content glass-box">
+      <div class="modal-header">
+        <h3 id="modal-title">Medya Oynatıcı</h3>
+        <button id="btn-close-modal" class="btn-close">&times;</button>
+      </div>
+      <div id="modal-body" class="modal-body">
+        <!-- Video veya Ses tag'i enjekte edilir -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Bildirim Kutusu (Toast) -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
